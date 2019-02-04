@@ -1,0 +1,22 @@
+USER REPORT SYSTEM
+---------------------
+JAVA SWING
+DB via java class
+
+---
+login (maybe signup)
+---
+pdf file 
+enter math data (tests? essays?)
+view the data (not via pdf)
+---
+database: via java class
+
+Teachers: TeacherID, username, password
+Maths: testID, name, maxpoints
+StudentEssay, StudentID, TestId, points
+Student: StudentID, Studentname
+class: classid, name
+section: sectionID, classid, sectionname
+studentsection: sectionID, classid
+pdf: pdfID, pdfname, teacherid
