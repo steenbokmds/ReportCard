@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import data.Student;
+import domain.Student;
 import org.pmw.tinylog.Logger;
 import util.ReportCardsException;
 
