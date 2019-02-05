@@ -16,7 +16,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../../itextpdf-5.1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../itextpdf-5.1.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -25,7 +25,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../../pdf-renderer.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../pdf-renderer.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

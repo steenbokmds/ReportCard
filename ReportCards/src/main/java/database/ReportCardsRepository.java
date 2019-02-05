@@ -7,7 +7,6 @@ import java.sql.Statement;
 
 import domain.Student;
 import org.pmw.tinylog.Logger;
-import util.ReportCardsException;
 
 public final class ReportCardsRepository {
     public static final String SQL_POPULATE_DB = "DROP TABLE IF EXISTS `class`;\n" +
