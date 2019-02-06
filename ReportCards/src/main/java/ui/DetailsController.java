@@ -1,36 +1,46 @@
 package ui;
 
+import domain.Student;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+
+import javax.swing.*;
+import java.util.List;
 
 public class DetailsController {
 
     @FXML
-    private TextField btnName;
+    private TextField txtName;
 
     @FXML
-    private TextField btnClass;
+    private TextField txtClassR;
 
     @FXML
-    private TextField btnRollnumber;
+    private TextField txtRollnumber;
 
     @FXML
-    private TextField btnFathersname;
+    private TextField txtFathersname;
 
     @FXML
     private TextField txtContactnumber;
 
     @FXML
-    private TextField btnBloodgroup;
+    private TextField txtBloodgroup;
 
     @FXML
-    private TextField btnDisability;
+    private TextField txtDisability;
 
     @FXML
-    private TextField btnSection;
+    private TextField txtSectionR;
 
     @FXML
     private TextArea txaArea;
@@ -48,8 +58,25 @@ public class DetailsController {
     private Button btnSearch;
 
     @FXML
+    private Button btnUpdate;
+
+    @FXML
     private Button btnHome;
 
+    @FXML
+    void initialize() {
+
+//
+//        txtName = new TextField();
+//        txtClassR = new TextField();
+//        txtSectionR = new TextField();
+//        txtRollnumber = new TextField();
+//        txtFathersname = new TextField();
+//        txtContactnumber = new TextField();
+//        txaArea = new TextArea();
+//        txtBloodgroup = new TextField();
+//        txtDisability = new TextField();
+    }
     @FXML
     void btnHome(ActionEvent event) {
 
@@ -58,7 +85,34 @@ public class DetailsController {
 
     @FXML
     void btnSearch_Click(ActionEvent event) {
+//        FXMLLoader loader = new FXMLLoader();
+//        DetailsController controller = (DetailsController) loader.getController();
+//        controller.setTheStage(btnSearch.getScene());
+
+        int id = Integer.parseInt(txtID.getText());
+        int myClass = Integer.parseInt(txtClass.getText());
+        String section = txtSection.getText();
+        Student st = data.Repository.getInstance().getShopRepository().searchStudent(id,myClass,section);
+        if(st!=null){
+            System.out.println(st.getName());
+            System.out.println(st.toString());
+            txtContactnumber.setText(st.getContactnumber());
+            txtSection.setText(st.getName());
+            txtName.setText(st.getName());
+            txtClassR.setText(""+st.getC_id());
+            txtSectionR.setText(st.getSection());
+            txtRollnumber.setText(""+st.getR_id());
+            txtFathersname.setText(st.getFathersname());
+            txaArea.setText(st.getAddress());
+            txtBloodgroup.setText(st.getBloodgroup());
+            txtDisability.setText(st.getDisability());
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "No student found", "Warning: no student found", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    @FXML
+    void btnUpdate_Click(ActionEvent event) {
 
     }
-
 }

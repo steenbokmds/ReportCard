@@ -16,6 +16,7 @@ public final class HelperUI {
             //System.out.println("test");
             URL fxmlURL = ClassLoader.getSystemResource("fx/" + name);
             FXMLLoader detailLoader = new FXMLLoader(fxmlURL);
+            detailLoader.getController();
             Pane root = null;
 
             root = detailLoader.load();
@@ -25,6 +26,7 @@ public final class HelperUI {
             dialogStage.setScene(scene);
             dialogStage.show();
 
+            //close previous window
             ((Node)(event.getSource())).getScene().getWindow().hide();
         } catch (IOException e) {
             e.printStackTrace();
