@@ -1,6 +1,6 @@
-package data;
+package database;
 
-import database.MySqlRepository;
+//import database.MySqlRepository;
 
 public class Repository {
     private static Repository ourInstance = new Repository();

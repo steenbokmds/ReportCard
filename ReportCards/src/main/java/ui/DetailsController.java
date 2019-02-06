@@ -95,7 +95,7 @@ public class DetailsController {
         int id = Integer.parseInt(txtID.getText());
         int myClass = Integer.parseInt(txtClass.getText());
         String section = txtSection.getText();
-        st = data.Repository.getInstance().getShopRepository().searchStudent(id,myClass,section);
+        st = database.Repository.getInstance().getShopRepository().searchStudent(id,myClass,section);
         if(st!=null){
             System.out.println(st.getName());
             System.out.println(st.toString());
@@ -125,6 +125,6 @@ public class DetailsController {
         st.setBloodgroup(txtBloodgroup.getText());
         st.setDisability(txtDisability.getText());
 
-        data.Repository.getInstance().getShopRepository().updateStudent(st);
+        database.Repository.getInstance().getShopRepository().updateStudent(st);
     }
 }

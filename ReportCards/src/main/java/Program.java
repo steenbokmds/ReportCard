@@ -1,4 +1,4 @@
-import data.Repository;
+import database.Repository;
 import domain.Course;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +27,7 @@ public class Program extends Application {
         //fast test to see if the connection is working
 
 
-        List<Course> courses = Repository.getInstance().getShopRepository().getClasses();
+        List<Course> courses = database.Repository.getInstance().getShopRepository().getClasses();
         for(int i = 0; i<courses.size();i++){
             System.out.println(courses.get(i));
         }

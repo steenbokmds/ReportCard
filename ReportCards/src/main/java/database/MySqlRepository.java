@@ -35,6 +35,11 @@ public class MySqlRepository implements ReportCardsRepo {
             "set name = ?, fathers_name = ?, address = ?, blood_group = ?, disability = ?\n" +
             "where stud_id =  ?";
 
+    private final String MYSQL_SELECT_STUDENTGRADES = "select * from students\n" +
+            "inner join class on class.c_id = students.stud_id\n" +
+            "inner join students_details on students_details.stud_id = students.stud_id\n"+
+            "where students.c_id = ? and section = ?";
+
     public List<Course> getClasses() {
         List<Course> classes;
         try (Connection con = MySqlConnection.getConnection();
@@ -142,13 +147,44 @@ public class MySqlRepository implements ReportCardsRepo {
             prep.setString(1, st.getName());
             prep.setString(2, st.getFathersname());
             prep.setString(3, st.getAddress());
-            prep.setString(4,st.getBloodgroup());
-            prep.setString(5,st.getDisability());
-            prep.setInt(6,st.getID());
+            prep.setString(4, st.getBloodgroup());
+            prep.setString(5, st.getDisability());
+            prep.setInt(6, st.getID());
 
             prep.execute();
 
             System.out.println("2");
+        } catch (SQLException ex) {
+            throw new ReportCardsException("DB not found", ex);
+        }
+    }
+
+    public List<Student> getStudentsFromClassSection(int class_id, String section) {
+        List<Student> students = null;
+        try (Connection con = MySqlConnection.getConnection();
+             PreparedStatement prep = con.prepareStatement(MYSQL_SELECT_STUDENTGRADES)) {
+
+            prep.setInt(1, class_id);
+            prep.setString(2, section);
+            try (ResultSet rs = prep.executeQuery()) {
+
+                students = new ArrayList<>();
+
+                while (rs.next()) {
+                    int id = rs.getInt("stud_id");
+                    int rollno = rs.getInt("rollno");
+                    int cid = rs.getInt("c_id");
+                    int myClass = rs.getInt("class");
+                    String section2 = rs.getString("section");
+
+
+                    Student st = new Student(id, rollno, cid, section2);
+                    st.setName(rs.getString("name"));
+                    students.add(st);
+                }
+
+                return students;
+            }
         } catch (SQLException ex) {
             throw new ReportCardsException("DB not found", ex);
         }

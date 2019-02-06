@@ -1,6 +1,6 @@
 package ui;
 
-import data.Repository;
+import database.Repository;
 import domain.Course;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
