@@ -28,11 +28,10 @@ public class MySqlRepository implements ReportCardsRepo {
             "where rollno = ? and\n" +
             "class.class = ?  and section = ?;";
 
-    private final String MYSQL_UPDATE_TEACHERS = "UPDATE students\n" +
+    private final String MYSQL_UPDATE_STUDENT = "UPDATE students\n" +
             "set rollno = ?, c_id = ?\n" +
-            "where stud_id = ?;\n" +
-            "\n" +
-            "UPDATE students_details\n" +
+            "where stud_id = ?;\n";
+    private final String MYSQL_UPDATE_STUDENTDETAILS = "UPDATE students_details\n" +
             "set name = ?, fathers_name = ?, address = ?, blood_group = ?, disability = ?\n" +
             "where stud_id =  ?";
 
@@ -90,9 +89,10 @@ public class MySqlRepository implements ReportCardsRepo {
             prep.setInt(1, id);
             prep.setInt(2, c_id);
             prep.setString(3, section);
-            System.out.println(id+" "+c_id+" "+section);
+            System.out.println(id + " " + c_id + " " + section);
             try (ResultSet rs = prep.executeQuery()) {
                 rs.next();
+                int stud_id = rs.getInt("stud_id");
                 String name = rs.getString("name");
                 String fname = rs.getString("fathers_name");
                 String contact = rs.getString("contact");
@@ -100,7 +100,7 @@ public class MySqlRepository implements ReportCardsRepo {
                 String bloodGroup = rs.getString("blood_group");
                 String disability = rs.getString("disability");
 
-                Student st = new Student(id, c_id, section);
+                Student st = new Student(stud_id, id, c_id, section);
                 st.setName(name);
                 st.setFathersname(fname);
                 st.setContactnumber(contact);
@@ -108,8 +108,7 @@ public class MySqlRepository implements ReportCardsRepo {
                 st.setBloodgroup(bloodGroup);
                 st.setDisability(disability);
                 return st;
-            }
-            catch(Exception ex){
+            } catch (Exception ex) {
                 ex.printStackTrace();
                 return null;
             }
@@ -119,7 +118,39 @@ public class MySqlRepository implements ReportCardsRepo {
         }
     }
 
-    public void updateStudent(){
+    public void updateStudent(Student st) {
+        try (Connection con = MySqlConnection.getConnection();
+             PreparedStatement prep = con.prepareStatement(MYSQL_UPDATE_STUDENT)) {
 
+
+            prep.setInt(1, st.getR_id());
+            prep.setInt(2, st.getC_id());
+            prep.setInt(3, st.getID());
+
+            prep.execute();
+
+            System.out.println("1");
+            System.out.println(st.toString());
+        } catch (SQLException ex) {
+            throw new ReportCardsException("DB not found", ex);
+        }
+
+        try (Connection con = MySqlConnection.getConnection();
+             PreparedStatement prep = con.prepareStatement(MYSQL_UPDATE_STUDENTDETAILS)) {
+
+
+            prep.setString(1, st.getName());
+            prep.setString(2, st.getFathersname());
+            prep.setString(3, st.getAddress());
+            prep.setString(4,st.getBloodgroup());
+            prep.setString(5,st.getDisability());
+            prep.setInt(6,st.getID());
+
+            prep.execute();
+
+            System.out.println("2");
+        } catch (SQLException ex) {
+            throw new ReportCardsException("DB not found", ex);
+        }
     }
 }

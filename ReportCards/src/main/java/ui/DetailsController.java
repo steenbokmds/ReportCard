@@ -77,6 +77,9 @@ public class DetailsController {
 //        txtBloodgroup = new TextField();
 //        txtDisability = new TextField();
     }
+
+    Student st = null;
+
     @FXML
     void btnHome(ActionEvent event) {
 
@@ -92,12 +95,11 @@ public class DetailsController {
         int id = Integer.parseInt(txtID.getText());
         int myClass = Integer.parseInt(txtClass.getText());
         String section = txtSection.getText();
-        Student st = data.Repository.getInstance().getShopRepository().searchStudent(id,myClass,section);
+        st = data.Repository.getInstance().getShopRepository().searchStudent(id,myClass,section);
         if(st!=null){
             System.out.println(st.getName());
             System.out.println(st.toString());
             txtContactnumber.setText(st.getContactnumber());
-            txtSection.setText(st.getName());
             txtName.setText(st.getName());
             txtClassR.setText(""+st.getC_id());
             txtSectionR.setText(st.getSection());
@@ -113,6 +115,16 @@ public class DetailsController {
     }
     @FXML
     void btnUpdate_Click(ActionEvent event) {
+        st.setName(txtName.getText());
+        st.setC_id(Integer.parseInt(txtClassR.getText()));
+        st.setSection(txtSectionR.getText());
+        st.setR_id(Integer.parseInt(txtRollnumber.getText()));
+        st.setFathersname(txtFathersname.getText());
+        st.setContactnumber(txtContactnumber.getText());
+        st.setAddress(txaArea.getText());
+        st.setBloodgroup(txtBloodgroup.getText());
+        st.setDisability(txtDisability.getText());
 
+        data.Repository.getInstance().getShopRepository().updateStudent(st);
     }
 }

@@ -20,3 +20,11 @@ class: classid, name
 section: sectionID, classid, sectionname
 studentsection: sectionID, classid
 pdf: pdfID, pdfname, teacherid
+
+
+If you need Matthias:
+https://www.facebook.com/matthias.deseins
+Discord: Wojtek322#1590
+
+If you need Timothy:
+https://www.facebook.com/timothy.gilles.77

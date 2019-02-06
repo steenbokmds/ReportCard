@@ -25,15 +25,15 @@
       <Label layoutX="357.0" layoutY="283.0" text="Address" />
       <Label layoutX="354.0" layoutY="359.0" text="Bloodgroup" />
       <Label layoutX="354.0" layoutY="391.0" text="Disability" />
-      <TextField fx:id="txtName" editable="false" layoutX="548.0" layoutY="21.0" />
-      <TextField fx:id="txtClassR" editable="false" layoutX="548.0" layoutY="54.0" />
-      <TextField fx:id="txtRollnumber" editable="false" layoutX="548.0" layoutY="119.0" />
-      <TextField fx:id="txtFathersname" editable="false" layoutX="548.0" layoutY="156.0" />
-      <TextField fx:id="txtContactnumber" editable="false" layoutX="548.0" layoutY="197.0" />
-      <TextField fx:id="txtBloodgroup" editable="false" layoutX="548.0" layoutY="355.0" />
-      <TextField fx:id="txtDisability" editable="false" layoutX="548.0" layoutY="387.0" />
+      <TextField fx:id="txtName" layoutX="548.0" layoutY="21.0" />
+      <TextField fx:id="txtClassR" layoutX="548.0" layoutY="54.0" />
+      <TextField fx:id="txtRollnumber" layoutX="548.0" layoutY="119.0" />
+      <TextField fx:id="txtFathersname" layoutX="548.0" layoutY="156.0" />
+      <TextField fx:id="txtContactnumber" layoutX="548.0" layoutY="197.0" />
+      <TextField fx:id="txtBloodgroup" layoutX="548.0" layoutY="355.0" />
+      <TextField fx:id="txtDisability" layoutX="548.0" layoutY="387.0" />
       <Label layoutX="354.0" layoutY="90.0" text="Section" />
-      <TextField fx:id="txtSectionR" editable="false" layoutX="548.0" layoutY="86.0" />
-      <TextArea fx:id="txaArea" editable="false" layoutX="548.0" layoutY="230.0" prefHeight="106.0" prefWidth="189.0" />
+      <TextField fx:id="txtSectionR" layoutX="548.0" layoutY="86.0" />
+      <TextArea fx:id="txaArea" layoutX="548.0" layoutY="230.0" prefHeight="106.0" prefWidth="189.0" />
    </children>
 </Pane>

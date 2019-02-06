@@ -4,10 +4,12 @@ public class Student {
 
     private String section, name, fathersname, contactnumber, address, bloodgroup;
     private String disability;
-    private final int c_id;
-    private final int r_id;
+    private int c_id;
+    private int r_id;
+    private int id;
 
-    public Student(int r_id, int c_id, String section) {
+    public Student(int id, int r_id, int c_id, String section) {
+        this.id = id;
         this.r_id = r_id;
         this.c_id = c_id;
         this.section = section;
@@ -78,6 +80,18 @@ public class Student {
         return r_id;
     }
 
+    public void setC_id(int c_id) {
+        this.c_id = c_id;
+    }
+
+    public void setR_id(int r_id) {
+        this.r_id = r_id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -91,5 +105,9 @@ public class Student {
                 ", c_id=" + c_id +
                 ", r_id=" + r_id +
                 '}';
+    }
+
+    public int getID() {
+        return id;
     }
 }
