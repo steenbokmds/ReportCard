@@ -1,6 +1,7 @@
 package ui;
 
 import database.Repository;
+import domain.Grades;
 import domain.Student;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,9 +13,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.control.cell.TextFieldTreeTableCell;
+import javafx.util.converter.IntegerStringConverter;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
+
+import static javafx.scene.control.cell.TextFieldTableCell.*;
+import static javafx.scene.control.cell.TextFieldTreeTableCell.*;
 
 public class ChangeGradesController {
 
@@ -28,7 +35,13 @@ public class ChangeGradesController {
     private Button btnSearch;
 
     @FXML
+    private Button btnUpdate;
+
+    @FXML
     private Button btnHome;
+
+    @FXML
+    private TableColumn<Integer,Integer> colStudID;
 
     @FXML
     private TableColumn<Integer, Integer> colNumber;
@@ -37,26 +50,41 @@ public class ChangeGradesController {
     private TableColumn<String, String> colName;
 
     @FXML
-    private TableView<Student> table;
+    private TableColumn<String, String> colSubject;
+
+    @FXML
+    private TableColumn<String, String> colMarks;
+
+    @FXML
+    private TableColumn<Integer,Integer> colSubid;
+
+    @FXML
+    private TableView<Grades> table;
 
     @FXML
     public void initialize() {
         colName.setCellValueFactory(new PropertyValueFactory<String, String>("name"));
         colNumber.setCellValueFactory(new PropertyValueFactory<Integer, Integer>("r_id"));
+        colMarks.setCellValueFactory(new PropertyValueFactory<String, String>("grades"));
+        colSubject.setCellValueFactory(new PropertyValueFactory<String, String>("subjectName"));
+        colSubid.setCellValueFactory(new PropertyValueFactory<Integer,Integer>("subid"));
+        colStudID.setCellValueFactory(new PropertyValueFactory<Integer, Integer>("stud_id"));
     }
 
 
     @FXML
     void btnSearch_Click(ActionEvent event) {
         //need to add teacher
-        List<Student> students = Repository.getInstance().getShopRepository().getStudentsFromClassSection(Integer.parseInt(btnClass.getText()), txtSection.getText());
-        ObservableList<Student> studsObservableList = FXCollections.observableList(students);
+        List<Grades> students = Repository.getInstance().getShopRepository().getStudentsFromClassSection(Integer.parseInt(btnClass.getText()), txtSection.getText());
+        ObservableList<Grades> studsObservableList = FXCollections.observableList(students);
+        System.out.println(studsObservableList.size());
+
         if (students.size() == 0) {
             JOptionPane.showMessageDialog(null, "No students in class / section", "Info: no students in class / section", JOptionPane.INFORMATION_MESSAGE);
 
         } else {
             table.setItems(studsObservableList);
-            colName.setCellFactory(TextFieldTableCell.forTableColumn());
+            colMarks.setCellFactory(TextFieldTableCell.forTableColumn());
         }
 
     }
@@ -64,5 +92,23 @@ public class ChangeGradesController {
     @FXML
     void btnHome_Click(ActionEvent event) {
         HelperUI.openNewPane("Menu.fxml", event);
+    }
+
+
+    @FXML
+    void btnUpdate_Click(ActionEvent event) {
+        List<Integer> id = new ArrayList<>();
+        List<Integer> subid = new ArrayList<>();
+        List<Integer> grades = new ArrayList<>();
+        for (Grades item : table.getItems()) {
+            id.add(colStudID.getCellObservableValue(item.getR_id()).getValue());
+        }
+        for (Grades item : table.getItems()) {
+            subid.add(colStudID.getCellObservableValue(item.getSubid()).getValue());
+        }
+        for (Grades item : table.getItems()) {
+            grades.add(colStudID.getCellObservableValue(Integer.parseInt(item.getGrades())).getValue());
+        }
+
     }
 }

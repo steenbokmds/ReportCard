@@ -37,8 +37,8 @@ public class LoginController {
     private PasswordField txtPassword;
     @FXML
     void initialize() {
-        txtUsername.setText("1");
-        txtPassword.setText("one");
+        txtUsername.setText("4");
+        txtPassword.setText("four");
     }
     @FXML
     void btnLogin_click(ActionEvent event) throws IOException {

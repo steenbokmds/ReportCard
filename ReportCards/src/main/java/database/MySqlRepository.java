@@ -1,7 +1,9 @@
 package database;
 
 import domain.Course;
+import domain.Grades;
 import domain.Student;
+import ui.LoginController;
 import util.ReportCardsException;
 
 import java.sql.Connection;
@@ -35,10 +37,14 @@ public class MySqlRepository implements ReportCardsRepo {
             "set name = ?, fathers_name = ?, address = ?, blood_group = ?, disability = ?\n" +
             "where stud_id =  ?";
 
-    private final String MYSQL_SELECT_STUDENTGRADES = "select * from students\n" +
+    private final String MYSQL_SELECT_STUDENTGRADES = "select students.stud_id, students_details.name, marks.sub_id, marks.marks, students.rollno, students.c_id, \tclass.section, subj.subname, subj.sub_id as subid\n\n" +
+            "from students\n" +
             "left join class on class.c_id = students.c_id\n" +
-            "left join students_details on students_details.stud_id = students.stud_id\n"+
-            "where class.c_id = ? and section = ?";
+            "left join students_details on students_details.stud_id = students.stud_id\n" +
+            "left join class_subject_map as csm on csm.c_id = class.c_id \n" +
+            "left join `subject` as subj on subj.sub_id = csm.sub_id\n" +
+            "left join marks on marks.stud_id = students.stud_id\n" +
+            "where students.c_id = ? and section = ? and t_id = ?;\n";
 
     public List<Course> getClasses() {
         List<Course> classes;
@@ -159,13 +165,14 @@ public class MySqlRepository implements ReportCardsRepo {
         }
     }
 
-    public List<Student> getStudentsFromClassSection(int class_id, String section) {
-        List<Student> students = null;
+    public List<Grades> getStudentsFromClassSection(int class_id, String section) {
+        List<Grades> students = null;
         try (Connection con = MySqlConnection.getConnection();
              PreparedStatement prep = con.prepareStatement(MYSQL_SELECT_STUDENTGRADES)) {
 
             prep.setInt(1, class_id);
             prep.setString(2, section);
+            prep.setString(3, "" + LoginController.teacherID);
             try (ResultSet rs = prep.executeQuery()) {
 
                 students = new ArrayList<>();
@@ -174,13 +181,15 @@ public class MySqlRepository implements ReportCardsRepo {
                     int id = rs.getInt("stud_id");
                     int rollno = rs.getInt("rollno");
                     int cid = rs.getInt("c_id");
-                    int myClass = rs.getInt("class");
                     String section2 = rs.getString("section");
-
+                    int marks = rs.getInt("marks");
+                    String subject = rs.getString("subname");
+                    int subid = rs.getInt("subid");
 
                     Student st = new Student(id, rollno, cid, section2);
                     st.setName(rs.getString("name"));
-                    students.add(st);
+                    Grades gs = new Grades(st, marks,subject,subid);
+                    students.add(gs);
                 }
 
                 return students;
