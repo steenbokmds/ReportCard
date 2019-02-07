@@ -44,10 +44,10 @@ public class MySqlRepository implements ReportCardsRepo {
             "left join class_subject_map as csm on csm.c_id = class.c_id \n" +
             "left join `subject` as subj on subj.sub_id = csm.sub_id\n" +
             "left join marks on marks.stud_id = students.stud_id\n" +
-            "where students.c_id = ? and section = ? and t_id = ?;\n";
+            "where class.class = ? and section = ? and t_id = ?;\n";
 
     private final String MYSQL_UPDATE_MARKS = "update marks\n" +
-            "set marks = ?\n" +
+            "set marks.marks = ?\n" +
             "where stud_id = ? and sub_id = ?";
 
     public List<Course> getClasses() {
@@ -206,10 +206,11 @@ public class MySqlRepository implements ReportCardsRepo {
         try (Connection con = MySqlConnection.getConnection();
              PreparedStatement prep = con.prepareStatement(MYSQL_UPDATE_MARKS)) {
 
-
-            prep.setInt(1, stud_id);
-            prep.setInt(2, sub_id);
-            prep.setInt(3, marks);
+            System.out.println("*********");
+            System.out.println(marks+" "+sub_id+" "+stud_id);
+            prep.setInt(1, marks);
+            prep.setInt(2, stud_id);
+            prep.setInt(3, sub_id);
 
             prep.execute();
         } catch (SQLException ex) {

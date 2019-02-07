@@ -21,7 +21,7 @@
           <TableColumn fx:id="colName" prefWidth="75.0" text="name" />
             <TableColumn fx:id="colSubid" prefWidth="75.0" text="subjectid" />
             <TableColumn fx:id="colSubject" prefWidth="75.0" text="subject" />
-            <TableColumn fx:id="colMarks" onEditCommit="#SaveValue" onEditStart="#EditStart" prefWidth="75.0" text="marks" />
+            <TableColumn fx:id="colMarks" onEditCommit="#SaveValue" prefWidth="75.0" text="marks" />
         </columns>
       </TableView>
       <Button fx:id="btnUpdate" layoutX="248.0" layoutY="361.0" mnemonicParsing="false" onAction="#btnUpdate_Click" text="Save" />

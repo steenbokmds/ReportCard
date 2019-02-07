@@ -5,6 +5,7 @@ import domain.Grades;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -112,8 +113,10 @@ public class ChangeGradesController {
 //            });
 
 
+
             j++;
         }
+        System.out.println("Grades size: "+grades.size());
         for (int i = 0; i < grades.size(); i++) {
             System.out.println(id.get(i) + " " + subid.get(i) + " " + grades.get(i));
             Repository.getInstance().getShopRepository().updateGrades(id.get(i), subid.get(i), Integer.parseInt(grades.get(i)));
@@ -121,26 +124,28 @@ public class ChangeGradesController {
         btnSearch_Click(new ActionEvent());
     }
 
-//    @FXML
-//    void SaveValue(TableColumn.CellEditEvent<String, String> event) {
-//        System.out.println("testing");
-//        table.getSelectionModel().getSelectedItem().setGrades(event.getNewValue());
+    @FXML
+    void SaveValue(TableColumn.CellEditEvent<String, String> event) {
+        System.out.println("testing");
+        table.getSelectionModel().getSelectedItem().setGrades(event.getNewValue());
+
+    }
+
+
+
 //
+//    @FXML
+//    void SaveValue(ActionEvent event) {
+//        System.out.println("testing");
+//        Event ev = (Event) event;
+//        TableColumn.CellEditEvent<String, String> cev = (TableColumn.CellEditEvent<String, String>) ev;
+//        System.out.println();
+//        table.getSelectionModel().getSelectedItem().setGrades(cev.getNewValue());
 //    }
 
-
-
-
-    @FXML
-    void SaveValue(ActionEvent event) {
-        System.out.println("testing");
-//        table.getSelectionModel().getSelectedItem().setGrades(event.getNewValue());
 //
-    }
-
-
-    @FXML
-    void EditStart(ActionEvent event) {
-        System.out.println("testing12345");
-    }
+//    @FXML
+//    void EditStart(ActionEvent event) {
+//        System.out.println("testing12345");
+//    }
 }
