@@ -36,9 +36,9 @@ public class MySqlRepository implements ReportCardsRepo {
             "where stud_id =  ?";
 
     private final String MYSQL_SELECT_STUDENTGRADES = "select * from students\n" +
-            "inner join class on class.c_id = students.stud_id\n" +
-            "inner join students_details on students_details.stud_id = students.stud_id\n"+
-            "where students.c_id = ? and section = ?";
+            "left join class on class.c_id = students.c_id\n" +
+            "left join students_details on students_details.stud_id = students.stud_id\n"+
+            "where class.c_id = ? and section = ?";
 
     public List<Course> getClasses() {
         List<Course> classes;
@@ -64,8 +64,8 @@ public class MySqlRepository implements ReportCardsRepo {
         }
     }
 
-    public Boolean login(int id, String password) {
-        Boolean correctLogin = false;
+    public int login(int id, String password) {
+        int teacherID = -1;
         try (Connection con = MySqlConnection.getConnection();
              PreparedStatement prep = con.prepareStatement(MYSQL_SELECT_TEACHER)) {
             prep.setInt(1, id);
@@ -76,12 +76,12 @@ public class MySqlRepository implements ReportCardsRepo {
                 String passwordFromDB = rs.getString("password");
                 System.out.println("test      " + idFromDB + " " + passwordFromDB);
                 if (id == idFromDB && password.equals(passwordFromDB)) {
-                    correctLogin = true;
+                    teacherID = idFromDB;
                 }
             } catch (Exception ex) {
-                return false;
+                return -1;
             }
-            return correctLogin;
+            return teacherID;
 
         } catch (SQLException ex) {
             throw new ReportCardsException("DB not found", ex);

@@ -32,7 +32,6 @@ public class MenuController {
     @FXML
     void btnPrintPDF_Click(ActionEvent event) {
         HelperUI.openNewPane("DownloadPDF.fxml", event);
-
     }
 
     @FXML

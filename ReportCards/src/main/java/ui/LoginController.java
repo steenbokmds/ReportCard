@@ -21,6 +21,7 @@ import java.util.List;
 
 public class LoginController {
     Scene stage = null;
+    public static int teacherID = -1;
 
     @FXML
     private AnchorPane PanStage;
@@ -41,9 +42,8 @@ public class LoginController {
     }
     @FXML
     void btnLogin_click(ActionEvent event) throws IOException {
-
-        Boolean canbeLoggedin = Repository.getInstance().getShopRepository().login(Integer.parseInt(txtUsername.getText()),txtPassword.getText());
-        if(canbeLoggedin){
+        teacherID = Repository.getInstance().getShopRepository().login(Integer.parseInt(txtUsername.getText()),txtPassword.getText());
+        if(teacherID != -1){
             HelperUI.openNewPane("Menu.fxml",event);
         }
         else{

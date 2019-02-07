@@ -11,7 +11,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 
+import javax.swing.*;
 import java.util.List;
 
 public class ChangeGradesController {
@@ -38,7 +40,7 @@ public class ChangeGradesController {
     private TableView<Student> table;
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         colName.setCellValueFactory(new PropertyValueFactory<String, String>("name"));
         colNumber.setCellValueFactory(new PropertyValueFactory<Integer, Integer>("r_id"));
     }
@@ -46,17 +48,21 @@ public class ChangeGradesController {
 
     @FXML
     void btnSearch_Click(ActionEvent event) {
-        List<Student> students = Repository.getInstance().getShopRepository().getStudentsFromClassSection(Integer.parseInt(btnClass.getText()),txtSection.getText());
-
+        //need to add teacher
+        List<Student> students = Repository.getInstance().getShopRepository().getStudentsFromClassSection(Integer.parseInt(btnClass.getText()), txtSection.getText());
         ObservableList<Student> studsObservableList = FXCollections.observableList(students);
-        System.out.println(students.size());
-        System.out.println(students.get(0).toString());
-        table.setItems(studsObservableList);
+        if (students.size() == 0) {
+            JOptionPane.showMessageDialog(null, "No students in class / section", "Info: no students in class / section", JOptionPane.INFORMATION_MESSAGE);
+
+        } else {
+            table.setItems(studsObservableList);
+            colName.setCellFactory(TextFieldTableCell.forTableColumn());
+        }
 
     }
+
     @FXML
     void btnHome_Click(ActionEvent event) {
-
-        HelperUI.openNewPane("Menu.fxml",event);
+        HelperUI.openNewPane("Menu.fxml", event);
     }
 }
