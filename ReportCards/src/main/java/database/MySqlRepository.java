@@ -46,6 +46,10 @@ public class MySqlRepository implements ReportCardsRepo {
             "left join marks on marks.stud_id = students.stud_id\n" +
             "where students.c_id = ? and section = ? and t_id = ?;\n";
 
+    private final String MYSQL_UPDATE_MARKS = "update marks\n" +
+            "set marks = ?\n" +
+            "where stud_id = ? and sub_id = ?";
+
     public List<Course> getClasses() {
         List<Course> classes;
         try (Connection con = MySqlConnection.getConnection();
@@ -188,7 +192,7 @@ public class MySqlRepository implements ReportCardsRepo {
 
                     Student st = new Student(id, rollno, cid, section2);
                     st.setName(rs.getString("name"));
-                    Grades gs = new Grades(st, marks,subject,subid);
+                    Grades gs = new Grades(st, marks, subject, subid);
                     students.add(gs);
                 }
 
@@ -198,4 +202,18 @@ public class MySqlRepository implements ReportCardsRepo {
             throw new ReportCardsException("DB not found", ex);
         }
     }
+    public void updateGrades(int stud_id, int sub_id, int marks) {
+        try (Connection con = MySqlConnection.getConnection();
+             PreparedStatement prep = con.prepareStatement(MYSQL_UPDATE_MARKS)) {
+
+
+            prep.setInt(1, stud_id);
+            prep.setInt(2, sub_id);
+            prep.setInt(3, marks);
+
+            prep.execute();
+        } catch (SQLException ex) {
+            throw new ReportCardsException("DB not found", ex);
+        }
+}
 }

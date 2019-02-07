@@ -2,7 +2,6 @@ package ui;
 
 import database.Repository;
 import domain.Grades;
-import domain.Student;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,15 +12,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.control.cell.TextFieldTreeTableCell;
-import javafx.util.converter.IntegerStringConverter;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import static javafx.scene.control.cell.TextFieldTableCell.*;
-import static javafx.scene.control.cell.TextFieldTreeTableCell.*;
 
 public class ChangeGradesController {
 
@@ -41,7 +35,7 @@ public class ChangeGradesController {
     private Button btnHome;
 
     @FXML
-    private TableColumn<Integer,Integer> colStudID;
+    private TableColumn<Integer, Integer> colStudID;
 
     @FXML
     private TableColumn<Integer, Integer> colNumber;
@@ -56,7 +50,7 @@ public class ChangeGradesController {
     private TableColumn<String, String> colMarks;
 
     @FXML
-    private TableColumn<Integer,Integer> colSubid;
+    private TableColumn<Integer, Integer> colSubid;
 
     @FXML
     private TableView<Grades> table;
@@ -67,7 +61,7 @@ public class ChangeGradesController {
         colNumber.setCellValueFactory(new PropertyValueFactory<Integer, Integer>("r_id"));
         colMarks.setCellValueFactory(new PropertyValueFactory<String, String>("grades"));
         colSubject.setCellValueFactory(new PropertyValueFactory<String, String>("subjectName"));
-        colSubid.setCellValueFactory(new PropertyValueFactory<Integer,Integer>("subid"));
+        colSubid.setCellValueFactory(new PropertyValueFactory<Integer, Integer>("subid"));
         colStudID.setCellValueFactory(new PropertyValueFactory<Integer, Integer>("stud_id"));
     }
 
@@ -99,16 +93,40 @@ public class ChangeGradesController {
     void btnUpdate_Click(ActionEvent event) {
         List<Integer> id = new ArrayList<>();
         List<Integer> subid = new ArrayList<>();
-        List<Integer> grades = new ArrayList<>();
+        List<String> grades = new ArrayList<>();
+        int j = 0;
         for (Grades item : table.getItems()) {
-            id.add(colStudID.getCellObservableValue(item.getR_id()).getValue());
+            grades.add(colMarks.getCellObservableValue(j).getValue());
+            System.out.println("value of cell: " + item.getGrades());
+            System.out.println(grades.toString());
+            System.out.println(item.getName() + " " + item.getStud_id() + " " + item.getSubid());
+            id.add(item.getStud_id());
+            subid.add(item.getSubid());
+            j++;
         }
-        for (Grades item : table.getItems()) {
-            subid.add(colStudID.getCellObservableValue(item.getSubid()).getValue());
+        for (int i = 0; i < grades.size(); i++) {
+            System.out.println(id.get(i) + " " + subid.get(i) + " " + grades.get(i));
+            Repository.getInstance().getShopRepository().updateGrades(id.get(i), subid.get(i), Integer.parseInt(grades.get(i)));
         }
-        for (Grades item : table.getItems()) {
-            grades.add(colStudID.getCellObservableValue(Integer.parseInt(item.getGrades())).getValue());
-        }
+        btnSearch_Click(new ActionEvent());
+    }
 
+//    @FXML
+//    void SaveValue(TableColumn.CellEditEvent<String, String> event) {
+//        System.out.println("testing");
+//        table.getSelectionModel().getSelectedItem().setGrades(event.getNewValue());
+//
+//    }
+    @FXML
+    void SaveValue(ActionEvent event) {
+        System.out.println("testing");
+//        table.getSelectionModel().getSelectedItem().setGrades(event.getNewValue());
+//
+    }
+
+
+    @FXML
+    void EditStart(ActionEvent event) {
+        System.out.println("testing12345");
     }
 }
