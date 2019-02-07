@@ -1,5 +1,6 @@
 package ui;
 
+import domain.Pdff;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -29,7 +30,7 @@ public class PDFController {
 
     @FXML
     void btnSearch_Click(ActionEvent event) {
-
+        Pdff pdf = new Pdff(txtClass.getText(),txtSection.getText());
     }
 
     @FXML
