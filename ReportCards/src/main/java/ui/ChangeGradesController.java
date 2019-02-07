@@ -16,6 +16,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ChangeGradesController {
 
@@ -63,6 +64,9 @@ public class ChangeGradesController {
         colSubject.setCellValueFactory(new PropertyValueFactory<String, String>("subjectName"));
         colSubid.setCellValueFactory(new PropertyValueFactory<Integer, Integer>("subid"));
         colStudID.setCellValueFactory(new PropertyValueFactory<Integer, Integer>("stud_id"));
+
+
+
     }
 
 
@@ -102,6 +106,12 @@ public class ChangeGradesController {
             System.out.println(item.getName() + " " + item.getStud_id() + " " + item.getSubid());
             id.add(item.getStud_id());
             subid.add(item.getSubid());
+
+//            colMarks.setOnEditCommit((TableColumn.CellEditEvent<Map<String, String>, String> t) -> {
+//                ((Map<String, String>) t.getTableView().getItems().get(t.getTablePosition().getRow())).put(Column1MapKey, t.getNewValue());
+//            });
+
+
             j++;
         }
         for (int i = 0; i < grades.size(); i++) {
@@ -117,6 +127,10 @@ public class ChangeGradesController {
 //        table.getSelectionModel().getSelectedItem().setGrades(event.getNewValue());
 //
 //    }
+
+
+
+
     @FXML
     void SaveValue(ActionEvent event) {
         System.out.println("testing");
